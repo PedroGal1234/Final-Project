@@ -27,16 +27,21 @@ def redrawAll():
         Sprite(gameOverText,(500,300))
 
 def drawSnakeBoard():
-  drawSnakeCell(ROWS,COLUMNS)
+    for c in data['board']:
+        for r in c:
+            drawSnakeCell(r,c)
 
 def drawSnakeCell(rows,columns):
     square = RectangleAsset(50,50,LineStyle(2.5,BLACK),WHITE)
-    for i in range(COLUMNS):
-        for k in range(ROWS):
-            Sprite(square,(data['X-cell'],data['Y-cell']))
-            data['X-cell'] += 50
-        data['Y-cell'] += 50
-        data['X-cell'] = 0
+    Snake = EllipseAsset(45,45,LineStyle(2.5,GREEN),GREEN)
+    Food = EllipseAsset(45,45,LineStyle(2.5,BLUE),BLUE)
+    
+    Sprite(square,(rows*50,columns*50))
+    
+    if data['board'][columns][rows] == 1:
+        Sprite(Snake,(rows,columns))
+    elif data['board'][columns][rows] == -1:
+        Sprite(Food,(columns,rows))
     
     
 
@@ -49,7 +54,7 @@ if __name__ == '__main__':
     data['Y-cell'] = 0
     
     loadSnakeBoard()
-    drawSnakeCell(ROWS,COLUMNS)
+    redrawAll()
     
     App().run()
 
