@@ -3,6 +3,7 @@
 #finalProject.py - snake game
 
 from ggame import *
+from random import randint
 
 COLUMNS = 10
 ROWS = 16
@@ -15,8 +16,8 @@ def loadSnakeBoard():
     data['board'] = []
     for i in range(COLUMNS):
         data['board'].append([0]*ROWS)
-    data['board'][0][0] = 1
-    data['board'][1][1] = -1
+    data['board'][1][1] = 1
+    data['board'][7][14] = -1
 
 def redrawAll():
     for item in App().spritelist[:]:
@@ -27,34 +28,39 @@ def redrawAll():
         Sprite(gameOverText,(500,300))
 
 def drawSnakeBoard():
-    for c in data['board']:
-        for r in c:
+    for c in range(COLUMNS):
+        for r in range(ROWS):
             drawSnakeCell(r,c)
 
 def drawSnakeCell(rows,columns):
-    square = RectangleAsset(50,50,LineStyle(2.5,BLACK),WHITE)
-    Snake = EllipseAsset(45,45,LineStyle(2.5,GREEN),GREEN)
-    Food = EllipseAsset(45,45,LineStyle(2.5,BLUE),BLUE)
+    square = RectangleAsset(50,50,LineStyle(2,BLACK),WHITE)
+    data['Snake'] = EllipseAsset(20,20,LineStyle(2,GREEN),GREEN)
+    data['food'] = EllipseAsset(20,20,LineStyle(2,BLUE),BLUE)
     
     Sprite(square,(rows*50,columns*50))
     
     if data['board'][columns][rows] == 1:
-        Sprite(Snake,(rows,columns))
+        Sprite(data['Snake'],(rows*50,columns*50))
     elif data['board'][columns][rows] == -1:
-        Sprite(Food,(columns,rows))
+        Sprite(data['food'],(columns*50,rows*50))
     
+def placeFood():
+    row = randint(0,ROWS)-1
+    column = randint(0,COLUMNS)-1
+    if data['board'][column][row] == 0:
+        data['board'][column][row] = -1
+        Sprite(data['food'],(row,column))
+    else:
+        placeFood()
     
-
 
 if __name__ == '__main__':
     
     data = {}
     data['gameOver'] = False
-    data['X-cell'] = 0
-    data['Y-cell'] = 0
     
     loadSnakeBoard()
-    redrawAll()
+    drawSnakeBoard()
     
     App().run()
 
