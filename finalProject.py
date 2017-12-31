@@ -46,13 +46,14 @@ def drawSnakeCell(rows,columns):
 
 
 def moveSnake(r,c):
-    if (data['SnakeLocation'].x + r*50 ) < 0 or (data['SnakeLocation'].y + c*50) < 0 or (data['SnakeLocation'].x + r*50) > 800 or data['SnakeLocation'].y > 500:
+    if (data['SnakeLocation'].x + r*50 ) < 0 or (data['SnakeLocation'].y + c*50) < 0 or (data['SnakeLocation'].x + r*50) > 800 or (data['SnakeLocation'].y + c*50) > 500:
         data['gameOver'] = True
     
-    if data['board'][data['SnakeLocation'].x/50][[data['SnakeLocation'].y/50] == 1:
+    if data['board'][data['SnakeLocation'].x/50 + r][data['SnakeLocation'].y/50 + c] == 1:
         data['gameOver'] = True
-   
-    
+    else:
+        data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] = 1
+        data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeLocation'].x+r*50,data['SnakeLocation'].y+c*50))
     
 def placeFood():
     row = randint(0,ROWS)-1
@@ -63,12 +64,15 @@ def placeFood():
     else:
         placeFood()
     
+def redrawAll():
+    
+    
 
 if __name__ == '__main__':
     
     data = {}
     data['gameOver'] = False
-    
+
     loadSnakeBoard()
     redrawAll()
     
