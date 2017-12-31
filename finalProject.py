@@ -40,16 +40,18 @@ def drawSnakeCell(rows,columns):
     Sprite(square,(rows*50,columns*50))
     
     if data['board'][columns][rows] == 1:
-        data['SnakeLocation'] = Sprite(data['Snake'],(rows*50,columns*50))
+        data['SnakeLocation'] = Sprite(data['Snake'],(rows*50+25,columns*50+25))
     elif data['board'][columns][rows] == -1:
-        Sprite(data['food'],(columns*50,rows*50))
-"""
+        Sprite(data['food'],(rows*50+25,columns*50+25))
+
+
 def moveSnake(r,c):
-    if data['SnakeLocation'].x < 0 or data['SnakeLocation'].y < 0 or data['SnakeLocation'].x > 800 or data['SnakeLocation'].y > 500:
+    if (data['SnakeLocation'].x + r*50 ) < 0 or (data['SnakeLocation'].y + c*50) < 0 or (data['SnakeLocation'].x + r*50) > 800 or data['SnakeLocation'].y > 500:
         data['gameOver'] = True
     
-    if data['board'][data['SnakeLocation'].x/50][]
-"""    
+    if data['board'][data['SnakeLocation'].x/50][[data['SnakeLocation'].y/50] == 1:
+        data['gameOver'] = True
+   
     
     
 def placeFood():
@@ -57,7 +59,7 @@ def placeFood():
     column = randint(0,COLUMNS)-1
     if data['board'][column][row] == 0:
         data['board'][column][row] = -1
-        Sprite(data['food'],(row,column))
+        Sprite(data['food'],(row*50+25,column*50+25))
     else:
         placeFood()
     
@@ -68,7 +70,7 @@ if __name__ == '__main__':
     data['gameOver'] = False
     
     loadSnakeBoard()
-    drawSnakeBoard()
+    redrawAll()
     
     App().run()
 
