@@ -5,8 +5,8 @@
 from ggame import *
 from random import randint
 
-COLUMNS = 10
-ROWS = 16
+COLUMNS = 7
+ROWS = 7
 GREEN = Color(0x00ff00,1)
 BLUE = Color(0x0000ff,1)
 BLACK = Color(0x000000,1)
@@ -17,7 +17,7 @@ def loadSnakeBoard():
     for i in range(COLUMNS):
         data['board'].append([0]*ROWS)
     data['board'][1][1] = 1
-    data['board'][7][14] = -1
+    data['board'][4][4] = -1
 
 def redrawAll():
     for item in App().spritelist[:]:
@@ -52,22 +52,24 @@ def moveSnake(r,c):
     if data['board'][data['SnakeLocation'].x/50 + r][data['SnakeLocation'].y/50 + c] == 1:
         data['gameOver'] = True
     else:
-        data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] = 2
+        findSnakeHead()
+        data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] = data['head']+1
         data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeLocation'].x+r*50,data['SnakeLocation'].y+c*50))
+        print(data['board'])
         removeTail()
 
 def removeTail():
-        for i in data['board']:
-            if i >= 1:
-                i -= 1
+    for k in range(ROWS):
+        for i in range(COLUMNS):
+            if data['board'][k][i] >= 1:
+                data['board'][k][i] -= 1
 
 def findSnakeHead():
-    head = 0
-    for i in data['board']:
-        if i > head:
-            head = i
-    
-    
+    data['head'] = 0
+    for k in data['board']:
+        for i in k:    
+            if i > data['head']:
+                data['head'] = i
     
 def placeFood():
     row = randint(0,ROWS)-1
@@ -78,6 +80,22 @@ def placeFood():
     else:
         placeFood()
 
+def keyPress1(event):
+    moveSnake(1,0)
+    redrawAll()
+
+def keyPress2(event):
+    moveSnake(-1,0)
+    redrawAll()
+
+def keyPress3(event):
+    moveSnake(0,-1)
+    redrawAll()
+
+def keyPress4(event):
+    moveSnake(0,1)
+    redrawAll()
+
 if __name__ == '__main__':
     
     data = {}
@@ -86,7 +104,12 @@ if __name__ == '__main__':
     loadSnakeBoard()
     redrawAll()
     
+    App().listenKeyEvent("keydown","right arrow", keyPress1)
+    App().listenKeyEvent("keydown","left arrow", keyPress2)
+    App().listenKeyEvent("keydown","up arrow", keyPress3)
+    App().listenKeyEvent("keydown","down arrow", keyPress4)
     App().run()
+    
 
 
 
