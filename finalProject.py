@@ -52,8 +52,22 @@ def moveSnake(r,c):
     if data['board'][data['SnakeLocation'].x/50 + r][data['SnakeLocation'].y/50 + c] == 1:
         data['gameOver'] = True
     else:
-        data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] = 1
+        data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] = 2
         data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeLocation'].x+r*50,data['SnakeLocation'].y+c*50))
+        removeTail()
+
+def removeTail():
+        for i in data['board']:
+            if i >= 1:
+                i -= 1
+
+def findSnakeHead():
+    head = 0
+    for i in data['board']:
+        if i > head:
+            head = i
+    
+    
     
 def placeFood():
     row = randint(0,ROWS)-1
@@ -63,16 +77,12 @@ def placeFood():
         Sprite(data['food'],(row*50+25,column*50+25))
     else:
         placeFood()
-    
-def redrawAll():
-    
-    
 
 if __name__ == '__main__':
     
     data = {}
     data['gameOver'] = False
-
+    
     loadSnakeBoard()
     redrawAll()
     
