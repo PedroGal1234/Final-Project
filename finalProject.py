@@ -22,10 +22,11 @@ def loadSnakeBoard():
 def redrawAll():
     for item in App().spritelist[:]:
         item.destroy()
-    drawSnakeBoard()
     if data['gameOver'] == True:
         gameOverText = TextAsset('You LOSE', fill=BLACK, style='bold 40pt Times')
         Sprite(gameOverText,(500,300))
+    else:
+        drawSnakeBoard()
 
 def drawSnakeBoard():
     for c in range(COLUMNS):
@@ -52,10 +53,11 @@ def moveSnake(r,c):
     elif data['board'][data['SnakeLocation'].x/50 + r][data['SnakeLocation'].y/50 + c] > 0:
         data['gameOver'] = True
     
-    elif data['board'][data['SnakeLocation'].x/50 + r][data['SnakeLocation'].y/50 + c] == -1:
+    elif data['board'][data['SnakeLocation'].x/50][data['SnakeLocation'].y/50] == -1:
         findSnakeHead()
         data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] = data['head']+1
         data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeLocation'].x+r*50,data['SnakeLocation'].y+c*50))
+        placeFood()
     
     else:
         findSnakeHead()
@@ -75,6 +77,7 @@ def findSnakeHead():
         for i in k:    
             if i > data['head']:
                 data['head'] = i
+    
     
 def placeFood():
     row = randint(0,ROWS)-1
