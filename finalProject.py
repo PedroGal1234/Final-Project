@@ -49,8 +49,14 @@ def moveSnake(r,c):
     if (data['SnakeLocation'].x + r*50 ) < 0 or (data['SnakeLocation'].y + c*50) < 0 or (data['SnakeLocation'].x + r*50) > 800 or (data['SnakeLocation'].y + c*50) > 500:
         data['gameOver'] = True
     
-    if data['board'][data['SnakeLocation'].x/50 + r][data['SnakeLocation'].y/50 + c] == 1:
+    elif data['board'][data['SnakeLocation'].x/50 + r][data['SnakeLocation'].y/50 + c] > 0:
         data['gameOver'] = True
+    
+    elif data['board'][data['SnakeLocation'].x/50 + r][data['SnakeLocation'].y/50 + c] == -1:
+        findSnakeHead()
+        data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] = data['head']+1
+        data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeLocation'].x+r*50,data['SnakeLocation'].y+c*50))
+    
     else:
         findSnakeHead()
         data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] = data['head']+1
@@ -58,11 +64,10 @@ def moveSnake(r,c):
         removeTail()
 
 def removeTail():
-    if data['board'][(data['SnakeLocation'].x+25)/50][(data['SnakeLocation'].y+25)/50] != -1:
-        for k in range(ROWS):
-            for i in range(COLUMNS):
-                if data['board'][k][i] >= 1:
-                    data['board'][k][i] -= 1
+    for k in range(ROWS):
+        for i in range(COLUMNS):
+            if data['board'][k][i] >= 1:
+                data['board'][k][i] -= 1
 
 def findSnakeHead():
     data['head'] = 0
