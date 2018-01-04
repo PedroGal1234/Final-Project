@@ -21,7 +21,7 @@ def loadSnakeBoard():
     data['board'][0][0] = 1
     data['board'][4][4] = -1
 
-#Deletes the whole board and then checks if it should print the you loose screen, If not then it draws the board
+#Deletes the whole board and then checks if it should Sprite the you lose screen, If not then it draws the board
 def redrawAll():
     for item in App().spritelist[:]:
         item.destroy()
@@ -37,7 +37,7 @@ def drawSnakeBoard():
         for r in range(ROWS):
             drawSnakeCell(r,c)
 
-#Prints a square for each cell and then checks to see if it needs to make a snake or a food in a squaew
+#Sprites a square for each cell and then checks to see if it needs to make a snake or a food in a squaew
 def drawSnakeCell(rows,columns):
     square = RectangleAsset(50,50,LineStyle(2,BLACK),WHITE)
     data['Snake'] = EllipseAsset(20,20,LineStyle(2,GREEN),GREEN)
@@ -69,9 +69,7 @@ def moveSnake(r,c):
             data['board'][data['SnakeHeadColumn']+c][data['SnakeHeadRow']+r] = data['head']+1
             data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeHeadRow']*50+r*50,data['SnakeHeadColumn']*50+c*50))
             redrawAll()
-            print('Placing Food')
             placeFood()
-            print(data['board'])
         
         #If nothing before it happens it moves the snake accordingly and also removes the tail
         else:
@@ -79,7 +77,6 @@ def moveSnake(r,c):
             data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeHeadRow']*50+r*50,data['SnakeHeadColumn']*50+c*50))
             redrawAll()
             removeTail()
-            print('Moving')
     
 #removes the tail of the snake by subtracting one to every snake of the board
 def removeTail():
@@ -125,19 +122,19 @@ def placeFood():
 #If the right arrow is pressed the snake moves right, and it changes the variable to keep it moving right
 def keyPress1(event):
     moveSnake(1,0)
-    data['movingDirection'] = 'right':
+    data['movingDirection'] = 'right'
     redrawAll()
 
 #If the left arrow is pressed the snake moves left, and it changes the variable to keep it moving left
 def keyPress2(event):
     moveSnake(-1,0)
-    data['movingDirection'] = 'left':
+    data['movingDirection'] = 'left'
     redrawAll()
 
 #If the up arrow is pressed the snake moves up, and it changes the variable to keep it moving up
 def keyPress3(event):
     moveSnake(0,-1)
-    data['movingDirection'] = 'up':
+    data['movingDirection'] = 'up'
     redrawAll()
 
 #If the up arrow is pressed the snake moves up, and it changes the variable to keep it moving up
@@ -148,7 +145,6 @@ def keyPress4(event):
     
 #Checks to see which direction the snake is moving and it keeps it moving in the same direction
 def step():
-    print('hi')
     if data['movingDirection'] == 'right':
         moveSnake(1,0)
     elif data['movingDirection'] == 'left':
