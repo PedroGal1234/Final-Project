@@ -60,6 +60,7 @@ def moveSnake(r,c):
         redrawAll()
         print('Placing Food')
         placeFood()
+        print(data['board'])
 
     
     else:
@@ -102,7 +103,7 @@ def findSnakeHead():
 def placeFood():
     data['RandomRow'] = randint(0,ROWS)-1
     data['RandomColumn'] = randint(0,COLUMNS)-1
-    if data['board'][column][row] == 0:
+    if data['board'][data['RandomColumn']][data['RandomRow']] == 0:
         data['board'][data['RandomColumn']][data['RandomRow']] = -1
         Sprite(data['food'],(data['RandomRow']*50+25,data['RandomColumn']*50+25))
     else:
