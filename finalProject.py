@@ -47,27 +47,27 @@ def drawSnakeCell(rows,columns):
 
 
 def moveSnake(r,c):
-    if (data['SnakeLocation'].x + r*50 ) < 0 or (data['SnakeLocation'].y + c*50) < 0 or (data['SnakeLocation'].x + r*50) > 800 or (data['SnakeLocation'].y + c*50) > 500:
+    findSnakeHead()
+    if (data['SnakeHeadRow']*50 + r*50 ) < 0 or (data['SnakeHeadColumn']*50+ c*50) < 0 or (data['SnakeHeadRow']*50 + r*50) > 800 or (data['SnakeHeadColumn']*50 + c*50) > 500:
         data['gameOver'] = True
-    """
-    elif data['board'][data['SnakeLocation'].x/50 + r][data['SnakeLocation'].y/50 + c] > 0:
+    
+    elif data['board'][data['SnakeHeadColumn']+c][data['SnakeHeadRow']+r] > 0:
         data['gameOver'] = True
-    """
+    
     if data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] == -1:
-        findSnakeHead()
-        data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] = data['head']+1
-        data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeLocation'].x+r*50,data['SnakeLocation'].y+c*50))
+        data['board'][data['SnakeHeadColumn']+c][data['SnakeHeadRow']+r] = data['head']+1
+        data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeHeadRow']*50+r*50,data['SnakeHeadColumn']*50+c*50))
         redrawAll()
+        print('Placing Food')
         placeFood()
 
     
     else:
-        findSnakeHead()
-        print('(',data['SnakeHeadRow'],',',data['SnakeHeadColumn'],')')
-        data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] = data['head']+1
-        data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeLocation'].x+r*50,data['SnakeLocation'].y+c*50))
+        data['board'][data['SnakeHeadColumn']+c][data['SnakeHeadRow']+r] = data['head']+1
+        data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeHeadRow']*50+r*50,data['SnakeHeadColumn']*50+c*50))
         redrawAll()
         removeTail()
+        print('Moving')
 
 
 def removeTail():
@@ -100,11 +100,11 @@ def findSnakeHead():
         SnakeHeadColumn += 1
        
 def placeFood():
-    row = randint(0,ROWS)-1
-    column = randint(0,COLUMNS)-1
+    data['RandomRow'] = randint(0,ROWS)-1
+    data['RandomColumn'] = randint(0,COLUMNS)-1
     if data['board'][column][row] == 0:
-        data['board'][column][row] = -1
-        Sprite(data['food'],(row*50+25,column*50+25))
+        data['board'][data['RandomColumn']][data['RandomRow']] = -1
+        Sprite(data['food'],(data['RandomRow']*50+25,data['RandomColumn']*50+25))
     else:
         placeFood()
 
