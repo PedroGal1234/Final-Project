@@ -47,29 +47,30 @@ def drawSnakeCell(rows,columns):
 
 
 def moveSnake(r,c):
-    findSnakeHead()
-    if (data['SnakeHeadRow']*50 + r*50 ) < 0 or (data['SnakeHeadColumn']*50+ c*50) < 0 or (data['SnakeHeadRow']*50 + r*50) > 800 or (data['SnakeHeadColumn']*50 + c*50) > 500:
-        data['gameOver'] = True
+    if data['gameOver'] == False:
+        findSnakeHead()
+        if (data['SnakeHeadRow']*50 + r*50 ) < 0 or (data['SnakeHeadColumn']*50+ c*50) < 0 or (data['SnakeHeadRow']*50 + r*50) > 800 or (data['SnakeHeadColumn']*50 + c*50) > 500:
+            data['gameOver'] = True
+        
+        elif data['board'][data['SnakeHeadColumn']+c][data['SnakeHeadRow']+r] > 0:
+            data['gameOver'] = True
+        
+        if data['board'][data['SnakeHeadColumn']+c][data['SnakeHeadRow']+r] == -1:
+            data['board'][data['SnakeHeadColumn']+c][data['SnakeHeadRow']+r] = data['head']+1
+            data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeHeadRow']*50+r*50,data['SnakeHeadColumn']*50+c*50))
+            redrawAll()
+            print('Placing Food')
+            placeFood()
+            print(data['board'])
     
-    elif data['board'][data['SnakeHeadColumn']+c][data['SnakeHeadRow']+r] > 0:
-        data['gameOver'] = True
+        
+        else:
+            data['board'][data['SnakeHeadColumn']+c][data['SnakeHeadRow']+r] = data['head']+1
+            data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeHeadRow']*50+r*50,data['SnakeHeadColumn']*50+c*50))
+            redrawAll()
+            removeTail()
+            print('Moving')
     
-    if data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] == -1:
-        data['board'][data['SnakeHeadColumn']+c][data['SnakeHeadRow']+r] = data['head']+1
-        data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeHeadRow']*50+r*50,data['SnakeHeadColumn']*50+c*50))
-        redrawAll()
-        print('Placing Food')
-        placeFood()
-        print(data['board'])
-
-    
-    else:
-        data['board'][data['SnakeHeadColumn']+c][data['SnakeHeadRow']+r] = data['head']+1
-        data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeHeadRow']*50+r*50,data['SnakeHeadColumn']*50+c*50))
-        redrawAll()
-        removeTail()
-        print('Moving')
-
 
 def removeTail():
     for k in range(COLUMNS):
@@ -124,6 +125,10 @@ def keyPress3(event):
 def keyPress4(event):
     moveSnake(0,1)
     redrawAll()
+    
+def step(event):
+    movesnake(1,0)
+        
 
 if __name__ == '__main__':
     
@@ -137,7 +142,7 @@ if __name__ == '__main__':
     App().listenKeyEvent("keydown","left arrow", keyPress2)
     App().listenKeyEvent("keydown","up arrow", keyPress3)
     App().listenKeyEvent("keydown","down arrow", keyPress4)
-    App().run()
+    App().run(step)
     
 
 
