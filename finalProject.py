@@ -159,7 +159,7 @@ if __name__ == '__main__':
     
     data = {}
     data['gameOver'] = False
-    data['movingDirection'] = 'right'
+    data['movingDirection'] = 'down'
     loadSnakeBoard()
     redrawAll()
     
