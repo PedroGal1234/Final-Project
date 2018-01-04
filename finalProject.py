@@ -62,9 +62,8 @@ def moveSnake(r,c):
 
     
     else:
+        print('(',data['SnakeHeadRow'],',',data['SnakeHeadColumn'],')')
         findSnakeHead()
-        print(data['SnakeHeadRow'])
-        print(data['SnakeHeadColumn'])
         data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] = data['head']+1
         data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeLocation'].x+r*50,data['SnakeLocation'].y+c*50))
         redrawAll()
@@ -81,15 +80,17 @@ def findSnakeHead():
     data['head'] = 0
     data['SnakeHeadRow'] = 0
     data['SnakeHeadColumn'] = 0
-    SnakeHeadRow = 0
-    SnakeHeadColumn = 0
+    
     
     for k in data['board']:
         for i in k:    
             if i > data['head']:
                 data['head'] = i
     
+    SnakeHeadRow = 0
+    SnakeHeadColumn = 0
     for j in range(0,COLUMNS):
+        SnakeHeadRow = 0
         for p in range(0,ROWS):
             if data['board'][SnakeHeadColumn][SnakeHeadRow] == data['head']:
                 data['SnakeHeadRow'] = SnakeHeadRow
