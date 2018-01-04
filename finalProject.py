@@ -49,12 +49,13 @@ def drawSnakeCell(rows,columns):
 def moveSnake(r,c):
     if data['gameOver'] == False:
         findSnakeHead()
+        
         if (data['SnakeHeadRow']*50 + r*50 ) < 0 or (data['SnakeHeadColumn']*50+ c*50) < 0 or (data['SnakeHeadRow']*50 + r*50) > 800 or (data['SnakeHeadColumn']*50 + c*50) > 500:
             data['gameOver'] = True
         
-        elif data['board'][data['SnakeHeadColumn']+c][data['SnakeHeadRow']+r] > 0:
+        if data['board'][data['SnakeHeadColumn']+c][data['SnakeHeadRow']+r] > 0:
             data['gameOver'] = True
-        
+            
         if data['board'][data['SnakeHeadColumn']+c][data['SnakeHeadRow']+r] == -1:
             data['board'][data['SnakeHeadColumn']+c][data['SnakeHeadRow']+r] = data['head']+1
             data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeHeadRow']*50+r*50,data['SnakeHeadColumn']*50+c*50))
@@ -126,8 +127,9 @@ def keyPress4(event):
     moveSnake(0,1)
     redrawAll()
     
-def step(event):
-    movesnake(1,0)
+def step():
+    print('hi')
+    moveSnake(1,0)
         
 
 if __name__ == '__main__':
