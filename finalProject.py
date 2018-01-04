@@ -81,6 +81,8 @@ def findSnakeHead():
     data['head'] = 0
     data['SnakeHeadRow'] = 0
     data['SnakeHeadColumn'] = 0
+    SnakeHeadRow = 0
+    SnakeHeadColumn = 0
     
     for k in data['board']:
         for i in k:    
@@ -89,10 +91,12 @@ def findSnakeHead():
     
     for j in range(0,COLUMNS):
         for p in range(0,ROWS):
-            if data['board'][data['SnakeHeadColumn']][data['SnakeHeadRow']] == data['head']:
+            if data['board'][SnakeHeadColumn][SnakeHeadRow] == data['head']:
+                data['SnakeHeadRow'] = SnakeHeadRow
+                data['SnakeHeadColumn'] = SnakeHeadColumn
                 break    
-            data['SnakeHeadRow'] += 1
-        data['SnakeHeadColumn'] += 1
+            SnakeHeadRow += 1
+        SnakeHeadColumn += 1
        
 def placeFood():
     row = randint(0,ROWS)-1
