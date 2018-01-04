@@ -49,22 +49,25 @@ def drawSnakeCell(rows,columns):
 def moveSnake(r,c):
     if (data['SnakeLocation'].x + r*50 ) < 0 or (data['SnakeLocation'].y + c*50) < 0 or (data['SnakeLocation'].x + r*50) > 800 or (data['SnakeLocation'].y + c*50) > 500:
         data['gameOver'] = True
-    
+    """
     elif data['board'][data['SnakeLocation'].x/50 + r][data['SnakeLocation'].y/50 + c] > 0:
         data['gameOver'] = True
-    
-    elif data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] == -1:
+    """
+    if data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] == -1:
         findSnakeHead()
-        print(1)
         data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] = data['head']+1
         data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeLocation'].x+r*50,data['SnakeLocation'].y+c*50))
+        redrawAll()
         placeFood()
+        print(data['board'])
     
     else:
         findSnakeHead()
         data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] = data['head']+1
         data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeLocation'].x+r*50,data['SnakeLocation'].y+c*50))
+        redrawAll()
         removeTail()
+        print(data['board'])
 
 def removeTail():
     for k in range(ROWS):
@@ -119,6 +122,7 @@ if __name__ == '__main__':
     App().listenKeyEvent("keydown","down arrow", keyPress4)
     App().run()
     
+
 
 
 
