@@ -40,7 +40,7 @@ def drawSnakeCell(rows,columns):
     
     Sprite(square,(rows*50,columns*50))
     
-    if data['board'][columns][rows] == 1:
+    if data['board'][columns][rows] >= 1:
         data['SnakeLocation'] = Sprite(data['Snake'],(rows*50+25,columns*50+25))
     elif data['board'][columns][rows] == -1:
         Sprite(data['food'],(rows*50+25,columns*50+25))
@@ -53,8 +53,9 @@ def moveSnake(r,c):
     elif data['board'][data['SnakeLocation'].x/50 + r][data['SnakeLocation'].y/50 + c] > 0:
         data['gameOver'] = True
     
-    elif data['board'][data['SnakeLocation'].x/50][data['SnakeLocation'].y/50] == -1:
+    elif data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] == -1:
         findSnakeHead()
+        print(1)
         data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] = data['head']+1
         data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeLocation'].x+r*50,data['SnakeLocation'].y+c*50))
         placeFood()
