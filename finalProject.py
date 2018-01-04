@@ -62,6 +62,7 @@ def moveSnake(r,c):
         print(data['board'])
     
     else:
+        print('moving')
         findSnakeHead()
         data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] = data['head']+1
         data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeLocation'].x+r*50,data['SnakeLocation'].y+c*50))
