@@ -16,7 +16,7 @@ def loadSnakeBoard():
     data['board'] = []
     for i in range(COLUMNS):
         data['board'].append([0]*ROWS)
-    data['board'][1][1] = 1
+    data['board'][0][0] = 1
     data['board'][4][4] = -1
 
 def redrawAll():
@@ -62,8 +62,8 @@ def moveSnake(r,c):
 
     
     else:
-        print('(',data['SnakeHeadRow'],',',data['SnakeHeadColumn'],')')
         findSnakeHead()
+        print('(',data['SnakeHeadRow'],',',data['SnakeHeadColumn'],')')
         data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] = data['head']+1
         data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeLocation'].x+r*50,data['SnakeLocation'].y+c*50))
         redrawAll()
