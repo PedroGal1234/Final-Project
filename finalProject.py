@@ -59,31 +59,41 @@ def moveSnake(r,c):
         data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeLocation'].x+r*50,data['SnakeLocation'].y+c*50))
         redrawAll()
         placeFood()
-        print(data['board'])
+
     
     else:
-        print('moving')
         findSnakeHead()
+        print(data['SnakeHeadRow'])
+        print(data['SnakeHeadColumn'])
         data['board'][data['SnakeLocation'].y/50+c][data['SnakeLocation'].x/50+r] = data['head']+1
         data['SnakeLocation'] = Sprite(data['Snake'],(data['SnakeLocation'].x+r*50,data['SnakeLocation'].y+c*50))
         redrawAll()
         removeTail()
-        print(data['board'])
+
 
 def removeTail():
-    for k in range(ROWS):
-        for i in range(COLUMNS):
+    for k in range(COLUMNS):
+        for i in range(ROWS):
             if data['board'][k][i] >= 1:
                 data['board'][k][i] -= 1
 
 def findSnakeHead():
     data['head'] = 0
+    data['SnakeHeadRow'] = 0
+    data['SnakeHeadColumn'] = 0
+    
     for k in data['board']:
         for i in k:    
             if i > data['head']:
                 data['head'] = i
     
-    
+    for j in range(0,COLUMNS):
+        for p in range(0,ROWS):
+            if data['board'][data['SnakeHeadColumn']][data['SnakeHeadRow']] == data['head']:
+                break    
+            data['SnakeHeadRow'] += 1
+        data['SnakeHeadColumn'] += 1
+       
 def placeFood():
     row = randint(0,ROWS)-1
     column = randint(0,COLUMNS)-1
