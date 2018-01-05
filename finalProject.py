@@ -57,7 +57,7 @@ def moveSnake(r,c):
         findSnakeHead()
         
         #checks to see if the snake ran off the board, if it did then it makes the game be over
-        if (data['SnakeHeadRow']*50 + r*50 ) < 0 or (data['SnakeHeadColumn']*50+ c*50) < 0 or (data['SnakeHeadRow']*50 + r*50) > 800 or (data['SnakeHeadColumn']*50 + c*50) > 500:
+        if (data['SnakeHeadRow']*50 + r*50 ) < 0 or (data['SnakeHeadColumn']*50+ c*50) < 0 or (data['SnakeHeadRow']*50 + r*50) > ROWS*50 or (data['SnakeHeadColumn']*50 + c*50) > COLUMNS*50:
             data['gameOver'] = True
         
         #checks to see if the the snake ran into itself, if it did then it makes the game be over
